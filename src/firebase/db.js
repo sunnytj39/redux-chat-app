@@ -12,3 +12,5 @@ export const onceGetUsers = () =>
   db.ref('users').once('value');
 
 // Other db APIs ...
+export const onceGetPosts = () =>
+  db.ref('posts').once('value');
