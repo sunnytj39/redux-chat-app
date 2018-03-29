@@ -1,80 +1,73 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import { auth } from 'firebase'
-import * as routes from 'constants/routes'
+import { auth } from "../../firebase";
+import * as routes from "constants/routes";
 
 const INITIAL_STATE = {
-    email: '',
-    password: '',
-    error: null,
+  email: "",
+  password: "",
+  error: null
 };
 
 class SignInForm extends Component {
-    state = {
-        ...INITIAL_STATE
-    }
+  state = {
+    ...INITIAL_STATE
+  };
 
-    handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value })
-    }
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-    handleSubmit = (event) => {
-        const {
-            email,
-            password,
-        } = this.state;
+  handleSubmit = event => {
+    console.log(event);
+    event.preventDefault();
 
-        const {
-            history,
-        } = this.props;
+    const { email, password } = this.state;
 
-        auth.doSignInWithEmailAndPassword(email, password)
-            .then(() => {
-                this.setState(() => ({ ...INITIAL_STATE }));
-                history.push(routes.HOME);
-            })
-            .catch(error => {
-                this.setState({
-                    error: error
-                });
-            });
+    const { history } = this.props;
 
-        event.preventDefault();
-    }
+    auth
+      .doSignInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.setState(() => ({ ...INITIAL_STATE }));
+        history.push(routes.HOME);
+      })
+      .catch(error => {
+        this.setState({
+          error: error
+        });
+      });
+  };
 
-    render() {
-        const {
-            email,
-            password,
-            error,
-        } = this.state;
+  render() {
+    const { email, password, error } = this.state;
 
-        const isInvalid =
-            password === ''
-            || email === '';
+    const isInvalid = password === "" || email === "";
 
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <input
-                    value={email}
-                    name="email"
-                    onChange={event => this.handleChange(event)}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    value={password}
-                    name="password"
-                    onChange={event => this.handleChange(event)}
-                    type="password"
-                    placeholder="Password"
-                />
-                <button disabled={isInvalid} type="submit">Sign In</button>
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          value={email}
+          name="email"
+          onChange={event => this.handleChange(event)}
+          type="text"
+          placeholder="Email Address"
+        />
+        <input
+          value={password}
+          name="password"
+          onChange={event => this.handleChange(event)}
+          type="password"
+          placeholder="Password"
+        />
+        <button disabled={isInvalid} type="submit">
+          Sign In
+        </button>
 
-                {error && <p>{error.message}</p>}
-            </form>
-        );
-    }
+        {error && <p>{error.message}</p>}
+      </form>
+    );
+  }
 }
 
 export default SignInForm;
