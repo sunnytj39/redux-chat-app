@@ -28,7 +28,7 @@ class HomePage extends Component {
   }
 }
 
-const UserList = ({ users }) =>
+const UserList = ({ users }) => (
   <div>
     <h2>List of Usernames of Users</h2>
     <p>(Saved on Sign Up in Firebase Database)</p>
@@ -37,6 +37,7 @@ const UserList = ({ users }) =>
       <div key={key}>{users[key].username}</div>
     )}
   </div>
+)
 
 const mapStateToProps = (state) => ({
   users: state.userState.users,

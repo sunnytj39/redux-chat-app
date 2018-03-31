@@ -1,6 +1,5 @@
 const initialState = {
-  posts: [{ name:'Miko', message:'hello', id:0 },
-          { name:'Ken',  message:'hi',    id:1 }]
+  posts: {}
 };
 
 const applySetPosts = (state, action) => ({
