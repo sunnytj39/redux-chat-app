@@ -1,24 +1,28 @@
-import { db } from './firebase';
+import { database } from './firebase';
 
 // User API
-
 export const SignUp = (id, username, email) => {
-  db.ref(`users/${id}`).set({
+  database.ref(`users/${id}`).set({
     username,
     email,
   });
 }
 
-export const MessagePost = (id, name, message) =>{
-  db.ref(`posts/${id}`).set({
+export const MessagePost = (id, name, message) => {
+  database.ref(`posts/${id}`).set({
     name,
     message,
   });
 }
 
-export const onceGetUsers = () =>
-  db.ref('users').once('value');
+export const clearPosts = () => {
+  //database.ref(`posts`).set(null);
+  alert();
+}
 
-// Other db APIs ...
+export const onceGetUsers = () =>
+  database.ref('users').once('value');
+
+// Other database APIs ...
 export const onceGetPosts = () =>
-  db.ref('posts').once('value');
+  database.ref('posts').once('value');

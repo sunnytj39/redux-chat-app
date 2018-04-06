@@ -13,10 +13,10 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
-const db = firebase.database();
+const database = firebase.database();
 const auth = firebase.auth();
 
 export {
-  db,
+  database,
   auth,
 };

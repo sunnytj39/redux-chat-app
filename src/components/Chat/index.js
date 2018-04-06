@@ -22,6 +22,10 @@ class ChatPage extends Component {
     this.setState({ message: event.target.value });
   }
 
+  handleClick() {
+    db.clearPosts();
+  }
+
   componentDidMount() {
     const { onSetPosts } = this.props;
     db.onceGetPosts().then(snapshot =>
@@ -34,8 +38,8 @@ class ChatPage extends Component {
     const id = Date.now();
     const name = this.props.authUser.displayName;
     const message = this.state.message;
+    this.setState({ message: '' });
     db.MessagePost(id, name, message);
-    this.componentDidMount();
   }
 
   render() {
@@ -47,6 +51,8 @@ class ChatPage extends Component {
       <h1>Chat</h1>
       <h2>Account: {authUser.displayName}</h2>
       <p>The Chat Page.</p>
+
+      <button onClick={() => this.handleClick()}>clear posts</button>
 
       <PostList posts={posts} />
 
@@ -66,7 +72,7 @@ class ChatPage extends Component {
 const PostList = ({ posts }) => (
   <div>
   <h2>List of Posts</h2>
-
+  
   {Object.keys(posts).map(key =>
     <div key={key}>{posts[key].name}: {posts[key].message}</div>
   )}
